@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles/Todo-list.css">
+</head>
+<body>
+    <p>ToDo list</p>
+    <div class="todo-input-grid">
+        <input placeholder="To do..." class="js-todo-input name-input" onkeydown="
+        if (event.key === 'Enter') {
+            addTodo()
+        }
+        ">
+        <input type="date" class="js-due-date-input due-date-input">
+
+        <button onclick="
+        addTodo()
+        " class="add-todo-button">Add</button>
+    </div>
+
+    <div class="js-todo-list todo-grid"></div>
+
+    <script>
+
+        const todoList = [{
+            name: 'make dinner', 
+            dueDate: '3-03-2026'
+            }, {
+            name : 'wash dishes',
+            dueDate: '3-03-2026'
+            }]
+
+    function runTodo () {
+        let todolistHTML = ''
+
+        for (let i = 0; i < todoList.length; i++) {
+            const valueObject = todoList[i];
+            
+            const { name, dueDate } = valueObject
+            
+            const html = `
+            <div>${name}</div>
+            <div> ${dueDate}</div>
+            <button onclick="
+                todoList.splice(${i}, 1);
+                runTodo();
+            " class= "delete-todo-button">Delete</button>
+            `
+            todolistHTML += html
+            
+        }
+
+    
+
+        document.querySelector('.js-todo-list')
+        .innerHTML = todolistHTML
+    }
+        
+
+
+        function addTodo () {
+            const inputElement = document.querySelector('.js-todo-input')
+            const todo = inputElement.value
+            
+
+            const dateInputElement = document.querySelector('.js-due-date-input');
+            const dueDate = dateInputElement.value
+
+            todoList.push({
+                //name: name,
+               // dueDate: dueDate,
+                name: todo,
+                dueDate
+                 })
+            
+            
+            inputElement.value = ''
+
+            runTodo()
+        }
+       
+        runTodo()
+        
+
+        
+        
+                
+    </script>
+</body>
+</html>
